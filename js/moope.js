@@ -57,6 +57,15 @@ var moope=new Class({
 		//calcolo del numero delle pagine
 		
 	},
+	toElement:function(){
+		if(this.element)
+		return this.element;
+		else
+		{
+			this.element=$(this.options.divID);
+		}
+		
+	},
 	getRowsNumber:function(){
 		
 		console.log('l\'algoritmo presenta problemi nella gestione delle approsimazione'); //il problema sono le altezze dei bordi
@@ -149,7 +158,7 @@ var page=new Class({
 	Implements:[Events,Options],
 	
 	options:{
-		
+		parent:null
 	},
 	
 	initialize:function(options){
@@ -163,6 +172,10 @@ var page=new Class({
 		{
 			this.element=new Element('div');
 		}
+	},
+	//disegnerà nella pagina le righe passata per paramatro
+	draw:function(){
+		
 	}
 });
 
