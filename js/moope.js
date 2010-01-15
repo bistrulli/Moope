@@ -1,5 +1,7 @@
 //moope v 0.0.1 | Mootools portfolio & presentation engine
-
+//bisogna progettare una classe pagina che modella la pagina visualizzata, questa concettualmente estenderà
+//elements, poi classe riga che modella le righe di items che estende element e rappresenta un div e la classe item che estende item e 
+//rappresenta un tag img 
 var moope=new Class({
 	
 	Implements:[Events,Options],
@@ -58,16 +60,17 @@ var moope=new Class({
 	},
 	getRowsNumber:function(){
 		
-		console.log('l\'algoritmo presenta problemi nella gestione delle approsimazione');
+		console.log('l\'algoritmo presenta problemi nella gestione delle approsimazione'); //il problema sono le altezze dei bordi
 		
-		var ContainerSize=$(this.options.divID).getSize();
+		
+		var ContainerSize=$(this.options.divID).getComputedSize(['width','height']);
 		this.options.ItemsNum=this.options.itemList?this.options.itemList.length:false;
 		if(!this.options.ItemsNum)
 		return false;
 		
 		//numero massimo di elementi all'interno di una riga
-		this.options.MaxItemPerRow=Math.floor(ContainerSize.x/this.options.thumbsDim);
-		var gap=ContainerSize.x-(this.options.MaxItemPerRow * this.options.thumbsDim); // spazio che rimane nella riga
+		this.options.MaxItemPerRow=Math.floor(ContainerSize.width/this.options.thumbsDim);
+		var gap=ContainerSize.width-(this.options.MaxItemPerRow * this.options.thumbsDim); // spazio che rimane nella riga
 		if(gap<(this.options.MaxItemPerRow+1)*15)
 		{
 			//eliminare almeno un elemento
@@ -75,10 +78,12 @@ var moope=new Class({
 		}
 		
 		//numero massimo di righe per pagina
-		var MaxRow=Math.floor(ContainerSize.y/this.options.thumbsDim);
-		var gap=ContainerSize.y-(MaxRow * this.options.thumbsDim); // spazio che rimane in verticale nel container
+		var MaxRow=Math.floor(ContainerSize.height/this.options.thumbsDim); //il numero delle righe è approssimato per diffeto
+		var gap=ContainerSize.height-(MaxRow * this.options.thumbsDim); // spazio che rimane in verticale nel container
+		console.log('l\' altezza del contenitore è '+ContainerSize.height);
 		if(gap<(MaxRow+1)*15)
 		{
+			console.log('il numero delle righe non rispetta il minimo gap')
 			//eliminare almeno una riga
 			MaxRow--;
 		}
