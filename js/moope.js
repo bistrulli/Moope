@@ -1,7 +1,9 @@
 //moope v 0.0.1 | Mootools portfolio & presentation engine
 //bisogna progettare una classe pagina che modella la pagina visualizzata, questa concettualmente estenderà
 //elements, poi classe riga che modella le righe di items che estende element e rappresenta un div e la classe item che estende item e 
-//rappresenta un tag img 
+//rappresenta un tag img
+
+// questa classe è pensata per modellare l'oggetto container che conterrà una lista di oggetti pagina
 var moope=new Class({
 	
 	Implements:[Events,Options],
@@ -13,7 +15,7 @@ var moope=new Class({
 		pagesNumber:1, //numero di pagine totale
 		currentPage:1, //pagina corrente o pagina iniziale
 		thumbsDim:100, //dimensione delle miniature
-		rowsItemList:[], //righe che contegono gli elementi
+		pagesItemList:[], //pagine che formeranno la presentazione
 		ItemsNum:null,//numero di elementi totali da visualizzare
 		MaxItemPerRow:null,//numero massimo di elementi posizionabili all'interno di una riga
 		PageRowsNumber:null,//numero di righe in una pagina che non sia l'ultima
@@ -27,9 +29,6 @@ var moope=new Class({
 	},*/
 	initialize:function(options){
 		this.setOptions(options);
-		/*this.setDivId(divId);
-		this.addItems(items);
-		this.setItemsPageNum(itemPN);*/
 		this.start();
 	},
 	setDivId:function(divId){
@@ -134,13 +133,37 @@ var moope=new Class({
 	start:function(){
 		//this.setPagesNumber();
 		this.getRowsNumber();
-		console.log('numero di elementi totali da visualizzare'+this.options.ItemsNum);
-		console.log('numero massimo di elementi posizionabili all\'interno di una riga'+this.options.MaxItemPerRow);
-		console.log('numero di righe in una pagina che non sia l\'ultima'+this.options.PageRowsNumber);
-		console.log('numero di righe dell\'ultima pagina'+this.options.LastPageRows);
-		console.log('numero di pagine totale'+this.options.pagesNumber);
+		console.log('numero di elementi totali da visualizzare: '+this.options.ItemsNum);
+		console.log('numero massimo di elementi posizionabili all\'interno di una riga: '+this.options.MaxItemPerRow);
+		console.log('numero di righe in una pagina che non sia l\'ultima: '+this.options.PageRowsNumber);
+		console.log('numero di righe dell\'ultima pagina: '+this.options.LastPageRows);
+		console.log('numero di pagine totale: '+this.options.pagesNumber);
 	},
 	stop:function(){}
+});
+
+//classe che modellerà la pagina e che grazie al metodo toElement è comme se estendesse element
+//quindi è possibile contemporaneamete pensare a questa classe sia come un div che come un istanza 
+//usando il metodo $ su un istanza di questo oggetto sarà ritornato l'element che lo rappresenta
+var page=new Class({
+	Implements:[Events,Options],
+	
+	options:{
+		
+	},
+	
+	initialize:function(options){
+		this.setOptions(options);
+	},
+	toElement:function()
+	{
+		if(this.element)
+		return this.element;
+		else
+		{
+			this.element=new Element('div');
+		}
+	}
 });
 
 var pe_item=new Class({
