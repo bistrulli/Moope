@@ -1,0 +1,24 @@
+#portfolio{
+	width:500px;
+	height:357px;
+	border:1px solid black;
+}
+
+.moopeIcon{
+	width:16px;
+	height:16px;
+	display:inline-block;
+	margin:2px;
+}
+.moopeName, .moopeContent{
+	display:inline;
+	margin:2px;
+}
+.moopeThumb, .moopeExcerpt{
+	padding:2px;
+	border:1px solid black;
+	display:table;
+}
+.moopeExcerpt{
+	position:absolute;
+}
