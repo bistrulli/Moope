@@ -57,11 +57,23 @@ var moope=new Class({
 		//calcolo del numero delle pagine
 		
 	},
+	//invocando $ o tutte i metodi di manipolazione del dom è come se si stesse 
+	//gestendo l'oggetto contenuto all'interno this.element
 	toElement:function(){
 		if(this.element)
 		return this.element;
 		else
 		{
+			var s=$(this.options.divID).getComputedSize(['width','height']);
+			this.element=new Element('div',{
+												'id':'moopeAlbum',
+												'class':'moopeAlbum',
+												'styles':{
+													'width':s.width,
+													'height':s.height,
+													'position':relative
+													}
+									});
 			return this.element=$(this.options.divID);
 		}
 		
@@ -207,8 +219,14 @@ var moope=new Class({
 			console.log('questa pagina conterrà '+rowToDisplay+' righe '+itemToDisplay+' elementi');
 		}
 	},
+	//prossima pagina
+	nextPage:function(){
+		
+	},
+	//pagina precedente
+	prevPage:function(){
+	},
 	start:function(){
-		//this.setPagesNumber();
 		this.getRowsNumber();
 		console.log('numero di elementi totali da visualizzare: '+this.options.ItemsNum);
 		console.log('numero massimo di elementi posizionabili all\'interno di una riga: '+this.options.MaxItemPerRow);
@@ -216,7 +234,8 @@ var moope=new Class({
 		console.log('numero di righe dell\'ultima pagina: '+this.options.LastPageRows);
 		console.log('numero di pagine totale: '+this.options.pagesNumber);
 		this.createPages();
-		//this.getPagesItemAtIndex((this.getCurrentPage()-1)).draw();
+		//this.getPageItemAtIndex((this.getCurrentPage()-1)).draw();
+		//$(this.getDivId()).adopt(this);
 	},
 	stop:function(){}
 });
@@ -228,7 +247,13 @@ var page=new Class({
 	Implements:[Events,Options],
 	
 	options:{
-		parent:null
+		parent:null,
+		id:null,
+		isLast:null,
+		index:null,
+		rowToDisplay:null,
+		itemToDisplay:null,
+		maxItemRow:null
 	},
 	
 	initialize:function(options){
@@ -245,7 +270,7 @@ var page=new Class({
 	},
 	//disegnerà nella pagina le righe passata per paramatro
 	draw:function(item){
-		
+		console.log('pagina')
 	}
 });
 
