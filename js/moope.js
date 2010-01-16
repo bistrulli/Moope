@@ -62,15 +62,12 @@ var moope=new Class({
 		return this.element;
 		else
 		{
-			this.element=$(this.options.divID);
+			return this.element=$(this.options.divID);
 		}
 		
 	},
 	getRowsNumber:function(){
-		
-		console.log('l\'algoritmo presenta problemi nella gestione delle approsimazione'); //il problema sono le altezze dei bordi
-		
-		
+
 		var ContainerSize=$(this.options.divID).getComputedSize(['width','height']);
 		this.options.ItemsNum=this.options.itemList?this.options.itemList.length:false;
 		if(!this.options.ItemsNum)
@@ -140,6 +137,15 @@ var moope=new Class({
 	getItemPerPage:function(){
 		return this.options.itemsPerPageNum;
 	},
+	getItemPerLastPage:function(){
+		if((this.getPageNumber()-1)==0)
+		{
+			return this.getItemsNum();
+		}else
+		{
+			return this.getItemsNum()-((this.getPageNumber()-1)*this.getItemPerPage());
+		}
+	},
 	getPageNumber:function(){
 		return this.options.pagesNumber;
 	},
@@ -164,7 +170,42 @@ var moope=new Class({
 		return this.options.PageRowsNumber;
 	},
 	getLastPageRows:function(){
-		return this.optionsLastPageRows;
+		return this.options.LastPageRows;
+	},
+	
+	//questo metodo istanzia un numero di oggetti pages necessario per la visualizzazione
+	//della presentazione, ogni pagina saprà il nunero di righe da visualizzare e il numero di 
+	//elementi che dovrà contenere.
+	createPages:function()
+	{	
+		var n=this.getPageNumber();
+		var list=this.getPagesItem();
+		var maxItemRow=this.getMaxItemPerRow();
+		for(var i=0;i<n;i++)
+		{
+			var id='pePages'+i;
+			var itemToDisplay;
+			var rowToDisplay;
+			if(i==(n-1))
+			{
+				isLast=true;
+				rowToDisplay=this.getLastPageRows();
+				itemToDisplay=this.getItemPerLastPage();
+			}
+			else
+			{
+				isLast=false;
+				rowToDisplay=this.getPageRowsNumber();
+				itemToDisplay=this.getItemPerPage();
+			}
+			
+			var ele=new page({parent:this,id:id,isLast:isLast,index:i,rowToDisplay:rowToDisplay,itemToDisplay:itemToDisplay,maxItemRow:maxItemRow});
+			
+			list=list.include(ele);
+			$(list.getLast()).set('id','pePages'+i);
+			console.log('istaziata la pagina '+(i+1)+" con id "+'pePages'+i);
+			console.log('questa pagina conterrà '+rowToDisplay+' righe '+itemToDisplay+' elementi');
+		}
 	},
 	start:function(){
 		//this.setPagesNumber();
@@ -174,6 +215,8 @@ var moope=new Class({
 		console.log('numero di righe in una pagina che non sia l\'ultima: '+this.options.PageRowsNumber);
 		console.log('numero di righe dell\'ultima pagina: '+this.options.LastPageRows);
 		console.log('numero di pagine totale: '+this.options.pagesNumber);
+		this.createPages();
+		//this.getPagesItemAtIndex((this.getCurrentPage()-1)).draw();
 	},
 	stop:function(){}
 });
@@ -197,7 +240,7 @@ var page=new Class({
 		return this.element;
 		else
 		{
-			this.element=new Element('div');
+			return this.element=new Element('div');
 		}
 	},
 	//disegnerà nella pagina le righe passata per paramatro
