@@ -125,19 +125,46 @@ var moope=new Class({
 		}
 	},
 	getItems:function(){
-		return this.itemList;
+		return this.options.itemList;
 	},
 	getItemAtIndex:function(index){
-		return this.itemList[index];
+		return this.options.itemList[index];
 	},
 	getThumsDim:function(){
-		return this.thumbsDim;
+		return this.options.thumbsDim;
 	},
 	getDivId:function(){
-		return this.divID;
+		return this.options.divID;
 	},
+	//numero di immagini per pagina che l'utente vorrebbe avere
 	getItemPerPage:function(){
-		return this.itemsPerPageNum;
+		return this.options.itemsPerPageNum;
+	},
+	getPageNumber:function(){
+		return this.options.pagesNumber;
+	},
+	getCurrentPage:function(){
+		return this.options.currentPage;
+	},
+	getPagesItem:function(){
+		return this.options.pagesItemList;
+	},
+	getPageItemAtIndex:function(index){
+		return this.options.pagesItemList[index];
+	},
+	getItemsNum:function(){
+		return this.options.ItemsNum;
+	},
+	getMaxItemPerRow:function()
+	{
+		return this.options.MaxItemPerRow;
+	},
+	getPageRowsNumber:function()
+	{
+		return this.options.PageRowsNumber;
+	},
+	getLastPageRows:function(){
+		return this.optionsLastPageRows;
 	},
 	start:function(){
 		//this.setPagesNumber();
@@ -174,7 +201,7 @@ var page=new Class({
 		}
 	},
 	//disegnerà nella pagina le righe passata per paramatro
-	draw:function(){
+	draw:function(item){
 		
 	}
 });
