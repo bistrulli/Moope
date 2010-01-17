@@ -1,6 +1,6 @@
 #portfolio{
-	width:500px;
-	height:358px;
+	width:360px;
+	height:768px;
 	border:1px solid black;
 }
 
@@ -21,4 +21,7 @@
 }
 .moopeExcerpt{
 	position:absolute;
+}
+.moopePage{
+	background-color:red;
 }

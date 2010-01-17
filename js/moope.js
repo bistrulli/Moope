@@ -71,10 +71,11 @@ var moope=new Class({
 												'styles':{
 													'width':s.width,
 													'height':s.height,
-													'position':relative
+													'position':'relative',
+													'display':'block'
 													}
 									});
-			return this.element=$(this.options.divID);
+			return this.element;
 		}
 		
 	},
@@ -108,7 +109,7 @@ var moope=new Class({
 		//numero di righe necessarie in una pagina
 		if(this.options.itemsPerPageNum<=this.options.MaxItemPerRow*MaxRow)
 		{
-			this.options.PageRowsNumber=Math.ceil(this.options.itemsPerPageNum/(MaxItemPerRow)); 
+			this.options.PageRowsNumber=Math.ceil(this.options.itemsPerPageNum/(this.options.MaxItemPerRow)); 
 		}else
 		{ 
 			this.options.PageRowsNumber=MaxRow;
@@ -234,8 +235,7 @@ var moope=new Class({
 		console.log('numero di righe dell\'ultima pagina: '+this.options.LastPageRows);
 		console.log('numero di pagine totale: '+this.options.pagesNumber);
 		this.createPages();
-		//this.getPageItemAtIndex((this.getCurrentPage()-1)).draw();
-		//$(this.getDivId()).adopt(this);
+		this.getPageItemAtIndex((this.getCurrentPage()-1)).draw();
 	},
 	stop:function(){}
 });
@@ -265,12 +265,23 @@ var page=new Class({
 		return this.element;
 		else
 		{
-			return this.element=new Element('div');
+			var width=$(this.options.parent).getStyle('width');
+			var height=$(this.options.parent).getStyle('height');
+			return this.element=new Element('div',{
+														'class':'moopePage',
+														'styles':{
+																	'width':width,
+																	'height':height,
+																	'display':'block'
+													}});
 		}
 	},
 	//disegnerà nella pagina le righe passata per paramatro
 	draw:function(item){
-		console.log('pagina')
+		console.log('qui parte l\'algoritmo per disegnare la  pagina '+this.options.id);
+		$(this).set('html','pagina'+this.options.id+' conterrà '+this.options.rowToDisplay+' righe'+' e '+this.options.itemToDisplay+' elementi');
+		$(this.options.parent).adopt(this);
+		$(this.options.parent.getDivId()).adopt(this.options.parent);
 	}
 });
 
